@@ -11,4 +11,10 @@ public class AuthRoutesTests extends BaseTest{
         Assert.assertTrue(driver.getCurrentUrl().endsWith("/login"));
     }
 
+    @Test
+    public void visitProfileWhenNotLoggedInTest() {
+        driver.get("https://vue-demo.daniel-avellaneda.com/profile");
+        Assert.assertTrue(driver.getCurrentUrl().endsWith("/login"));
+    }
+
 }
