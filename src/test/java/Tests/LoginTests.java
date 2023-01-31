@@ -13,12 +13,14 @@ import org.testng.annotations.Test;
 public class LoginTests extends BaseTest{
 
     private HomePage homePage;
+    private Faker faker;
 
     @BeforeClass
     @Override
     public void beforeClass() {
         super.beforeClass();
         homePage = new HomePage(driver, driverWait);
+        faker = new Faker();
     }
 
     @BeforeMethod
@@ -44,13 +46,24 @@ public class LoginTests extends BaseTest{
 
     @Test
     public void nonexistingUserTest() {
-        Faker faker = new Faker();
         loginPage.login(faker.internet().emailAddress(), faker.internet().password());
 
         WebElement error = driver.findElement(By.xpath("//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div/div[4]/div/div/div/div/div[1]/ul/li"));
         String errorMsg = error.getText();
 
         Assert.assertEquals(errorMsg, "User does not exists");
+        Assert.assertTrue(driver.getCurrentUrl().endsWith("/login"));
+    }
+
+    @Test
+    public void wrongPasswordTest() {
+        String email = "admin@admin.com";
+        loginPage.login(email, faker.internet().password());
+
+        WebElement errorPw = driver.findElement(By.xpath("//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div/div[4]/div/div/div/div/div[1]/ul/li"));
+        String errorMessage = errorPw.getText();
+
+        Assert.assertEquals(errorMessage, "Wrong password");
         Assert.assertTrue(driver.getCurrentUrl().endsWith("/login"));
     }
 
