@@ -5,6 +5,8 @@ import Pages.LoginPage;
 import com.github.javafaker.Faker;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -65,6 +67,16 @@ public class LoginTests extends BaseTest{
 
         Assert.assertEquals(errorMessage, "Wrong password");
         Assert.assertTrue(driver.getCurrentUrl().endsWith("/login"));
+    }
+
+    @Test
+    public void validLoginTest() {
+        String email = "admin@admin.com";
+        String password = "12345";
+        loginPage.login(email, password);
+
+        driverWait.until(ExpectedConditions.urlToBe("https://vue-demo.daniel-avellaneda.com/home"));
+        Assert.assertTrue(driver.getCurrentUrl().endsWith("/home"));
     }
 
 
