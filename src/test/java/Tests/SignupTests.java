@@ -29,6 +29,13 @@ public class SignupTests extends BaseTest{
         Assert.assertTrue(driver.getCurrentUrl().endsWith("/signup"));
     }
 
+    @Test
+    public void signupFieldInputTypeTest() {
+        Assert.assertEquals(signupPage.getSignupEmail().getAttribute("type"), "email");
+        Assert.assertEquals(signupPage.getSignupPassword().getAttribute("type"), "password");
+        Assert.assertEquals(signupPage.getSignupConfirmPassword().getAttribute("type"), "password");
+    }
+
 
 
 

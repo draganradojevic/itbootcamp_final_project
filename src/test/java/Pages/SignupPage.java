@@ -27,6 +27,18 @@ public class SignupPage extends BasePage{
         super(driver, webDriverWait);
     }
 
+    public WebElement getSignupEmail() {
+        return signupEmail;
+    }
+
+    public WebElement getSignupPassword() {
+        return signupPassword;
+    }
+
+    public WebElement getSignupConfirmPassword() {
+        return signupConfirmPassword;
+    }
+
     public void signup(String nameInput, String emailInput, String passwordInput, String confirmPasswordInput) {
         signupName.sendKeys(nameInput);
         signupEmail.sendKeys(emailInput);
