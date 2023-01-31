@@ -43,7 +43,7 @@ public class SignupPage extends BasePage{
         signupName.sendKeys(nameInput);
         signupEmail.sendKeys(emailInput);
         signupPassword.sendKeys(passwordInput);
-        signupPassword.sendKeys(confirmPasswordInput);
+        signupConfirmPassword.sendKeys(confirmPasswordInput);
         signupButton.click();
     }
 
