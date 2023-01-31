@@ -79,5 +79,23 @@ public class LoginTests extends BaseTest{
         Assert.assertTrue(driver.getCurrentUrl().endsWith("/home"));
     }
 
+//    @Test
+//    public void logoutTest() {
+//        Assert.assertTrue(homePage.getLogoutBtn().isDisplayed());
+//
+//        validLoginTest();
+//        homePage.logout();
+//
+//        Assert.assertTrue(driver.getCurrentUrl().endsWith("/login"));
+//
+//
+//        /////////////////////////////////////////////////////////
+//        // FALI TRECA STAVKA!
+//        /////////////////////////////////////////////////////////
+//
+//
+//
+//    }
+
 
 }
