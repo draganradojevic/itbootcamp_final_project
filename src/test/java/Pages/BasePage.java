@@ -9,9 +9,9 @@ public abstract class BasePage {
     protected WebDriver driver;
     protected WebDriverWait webDriverWait;
 
-    public BasePage(WebDriver driver, WebDriverWait webDriverWait) {
+    public BasePage(WebDriver driver, WebDriverWait driverWait) {
         this.driver = driver;
-        this.webDriverWait = webDriverWait;
+        this.webDriverWait = driverWait;
         PageFactory.initElements(this.driver, this);
     }
 }

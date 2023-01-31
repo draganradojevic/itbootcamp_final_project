@@ -1,5 +1,6 @@
 package Tests;
 
+import Pages.LandingPage;
 import Pages.LoginPage;
 import Pages.SignupPage;
 import org.openqa.selenium.WebDriver;
@@ -15,6 +16,7 @@ public abstract class BaseTest {
 
     protected WebDriver driver;
     protected WebDriverWait driverWait;
+    protected LandingPage landingPage;
     protected LoginPage loginPage;
     protected SignupPage signupPage;
 
@@ -27,6 +29,7 @@ public abstract class BaseTest {
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
         driverWait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        landingPage = new LandingPage(driver, driverWait);
         loginPage = new LoginPage(driver, driverWait);
         signupPage = new SignupPage(driver, driverWait);
     }

@@ -1,11 +1,9 @@
 package Tests;
 
-import Pages.HomePage;
-import Pages.LoginPage;
+import Pages.LandingPage;
 import com.github.javafaker.Faker;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -14,14 +12,14 @@ import org.testng.annotations.Test;
 
 public class LoginTests extends BaseTest{
 
-    private HomePage homePage;
+    private LandingPage landingPage;
     private Faker faker;
 
     @BeforeClass
     @Override
     public void beforeClass() {
         super.beforeClass();
-        homePage = new HomePage(driver, driverWait);
+        landingPage = new LandingPage(driver, driverWait);
         faker = new Faker();
     }
 
@@ -29,7 +27,7 @@ public class LoginTests extends BaseTest{
     @Override
     public void beforeMethod() {
         super.beforeMethod();
-        homePage.enterLoginPage();
+        landingPage.enterLoginPage();
     }
 
     @Test

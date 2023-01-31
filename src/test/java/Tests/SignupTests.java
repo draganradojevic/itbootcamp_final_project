@@ -1,8 +1,10 @@
 package Tests;
 
 import Pages.HomePage;
+import Pages.LandingPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -10,12 +12,14 @@ import org.testng.annotations.Test;
 
 public class SignupTests extends BaseTest{
 
+    private LandingPage landingPage;
     private HomePage homePage;
 
     @BeforeClass
     @Override
     public void beforeClass() {
         super.beforeClass();
+        landingPage = new LandingPage(driver, driverWait);
         homePage = new HomePage(driver, driverWait);
     }
 
@@ -23,7 +27,7 @@ public class SignupTests extends BaseTest{
     @Override
     public void beforeMethod() {
         super.beforeMethod();
-        homePage.enterSignupPage();
+        landingPage.enterSignupPage();
     }
 
     @Test
@@ -53,6 +57,22 @@ public class SignupTests extends BaseTest{
         Assert.assertEquals(errorMessage, "E-mail already exists");
         Assert.assertTrue(driver.getCurrentUrl().endsWith("/signup"));
     }
+
+//    @Test
+//    public void validSignupTest() {
+//        String name = "Dragan Radojevic";
+//        String email = "draganrad4@mail.com";
+//        String password = "12344321";
+//        String confirmPassword = "12344321";
+//
+//        signupPage.signup(name, email, password, confirmPassword);
+//
+//        driverWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"app\"]/div[4]/div/div/div[1]")));
+//
+//        Assert.assertEquals(homePage.getDialogMessage(), "IMPORTANT: Verify your account");
+//
+//    }
+
 
 
 
