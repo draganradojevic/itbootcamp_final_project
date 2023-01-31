@@ -1,5 +1,6 @@
 package Tests;
 
+import Pages.LoginPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -13,6 +14,9 @@ public abstract class BaseTest {
 
     protected WebDriver driver;
     protected WebDriverWait driverWait;
+    protected LoginPage loginPage;
+
+    protected final String baseURL = "https://vue-demo.daniel-avellaneda.com";
 
     @BeforeClass
     public void beforeClass() {
@@ -21,11 +25,12 @@ public abstract class BaseTest {
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
         driverWait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        loginPage = new LoginPage(driver, driverWait);
     }
 
     @BeforeMethod
     public void beforeMethod() {
-        driver.get("https://vue-demo.daniel-avellaneda.com/");
+        driver.get(baseURL);
     }
 
 
