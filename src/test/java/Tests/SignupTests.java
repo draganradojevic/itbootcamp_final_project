@@ -1,6 +1,7 @@
 package Tests;
 
 import Pages.HomePage;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -22,6 +23,12 @@ public class SignupTests extends BaseTest{
         super.beforeMethod();
         homePage.enterSignupPage();
     }
+
+    @Test
+    public void visitSignupPageTest() {
+        Assert.assertTrue(driver.getCurrentUrl().endsWith("/signup"));
+    }
+
 
 
 
