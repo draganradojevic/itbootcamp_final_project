@@ -12,17 +12,6 @@ import org.testng.annotations.Test;
 
 public class SignupTests extends BaseTest{
 
-    private LandingPage landingPage;
-    private HomePage homePage;
-
-    @BeforeClass
-    @Override
-    public void beforeClass() {
-        super.beforeClass();
-        landingPage = new LandingPage(driver, driverWait);
-        homePage = new HomePage(driver, driverWait);
-    }
-
     @BeforeMethod
     @Override
     public void beforeMethod() {
@@ -58,20 +47,20 @@ public class SignupTests extends BaseTest{
         Assert.assertTrue(driver.getCurrentUrl().endsWith("/signup"));
     }
 
-//    @Test
-//    public void validSignupTest() {
-//        String name = "Dragan Radojevic";
-//        String email = "draganrad4@mail.com";
-//        String password = "12344321";
-//        String confirmPassword = "12344321";
-//
-//        signupPage.signup(name, email, password, confirmPassword);
-//
-//        driverWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"app\"]/div[4]/div/div/div[1]")));
-//
-//        Assert.assertEquals(homePage.getDialogMessage(), "IMPORTANT: Verify your account");
-//
-//    }
+    @Test
+    public void validSignupTest() {
+        String name = "Dragan Radojevic";
+        String email = "draganr@mail.com";
+        String password = "12344321";
+        String confirmPassword = "12344321";
+
+        signupPage.signup(name, email, password, confirmPassword);
+
+        driverWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"app\"]/div[4]/div/div/div[1]")));
+
+        Assert.assertEquals(homePage.getDialogMessage(), "IMPORTANT: Verify your account");
+
+    }
 
 
 

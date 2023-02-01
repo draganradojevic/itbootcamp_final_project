@@ -77,23 +77,27 @@ public class LoginTests extends BaseTest{
         Assert.assertTrue(driver.getCurrentUrl().endsWith("/home"));
     }
 
-//    @Test
-//    public void logoutTest() {
-//        Assert.assertTrue(homePage.getLogoutBtn().isDisplayed());
-//
-//        validLoginTest();
-//        homePage.logout();
-//
-//        Assert.assertTrue(driver.getCurrentUrl().endsWith("/login"));
-//
-//
-//        /////////////////////////////////////////////////////////
-//        // FALI TRECA STAVKA!
-//        /////////////////////////////////////////////////////////
-//
-//
-//
-//    }
+    @Test
+    public void logoutTest() {
 
+        String email = "admin@admin.com";
+        String password = "12345";
+        loginPage.login(email, password);
 
+        Assert.assertTrue(homePage.getLogoutBtn().isDisplayed());
+
+        homePage.getLogoutBtn().click();
+
+        Assert.assertTrue(driver.getCurrentUrl().endsWith("/login"));
+
+        driver.get("https://vue-demo.daniel-avellaneda.com/home");
+
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        Assert.assertTrue(driver.getCurrentUrl().endsWith("/login"));
+    }
 }

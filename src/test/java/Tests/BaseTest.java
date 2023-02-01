@@ -1,8 +1,6 @@
 package Tests;
 
-import Pages.LandingPage;
-import Pages.LoginPage;
-import Pages.SignupPage;
+import Pages.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -19,8 +17,10 @@ public abstract class BaseTest {
     protected LandingPage landingPage;
     protected LoginPage loginPage;
     protected SignupPage signupPage;
+    protected HomePage homePage;
+    protected AdminCitiesPage adminCitiesPage;
 
-    protected final String baseURL = "https://vue-demo.daniel-avellaneda.com";
+    protected final String BASEURL = "https://vue-demo.daniel-avellaneda.com";
 
     @BeforeClass
     public void beforeClass() {
@@ -32,11 +32,13 @@ public abstract class BaseTest {
         landingPage = new LandingPage(driver, driverWait);
         loginPage = new LoginPage(driver, driverWait);
         signupPage = new SignupPage(driver, driverWait);
+        homePage = new HomePage(driver, driverWait);
+        adminCitiesPage = new AdminCitiesPage(driver, driverWait);
     }
 
     @BeforeMethod
     public void beforeMethod() {
-        driver.get(baseURL);
+        driver.get(BASEURL);
     }
 
 

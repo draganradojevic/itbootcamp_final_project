@@ -19,9 +19,6 @@ public class HomePage extends BasePage{
     @FindBy(xpath = "//*[@id=\"app\"]/div[1]/div/header/div/div[3]/button[1]")
     private WebElement adminBtn;
 
-    @FindBy(xpath = "//*[@id=\"list-item-282\"]/div[2]")
-    private WebElement cities;
-
     public HomePage(WebDriver driver, WebDriverWait driverWait) {
         super(driver, driverWait);
     }
@@ -32,11 +29,7 @@ public class HomePage extends BasePage{
     }
 
     public String getDialogMessage() {
-        return dialogMessage.getAttribute("value");
-    }
-
-    public void logout() {
-        logoutBtn.click();
+        return dialogMessage.getText();
     }
 
 
