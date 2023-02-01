@@ -25,14 +25,14 @@ public class AdminCitiesTests extends BaseTest {
         loginPage.login("admin@admin.com", "12345");
     }
 
-//    @Test
-//    public void visitAdminCitiesPageTest() {
-//        homePage.enterAdminCitiesPage();
-//
-//        Assert.assertTrue(driver.getCurrentUrl().endsWith("/admin/cities"));
-//        Assert.assertTrue(homePage.getLogoutBtn().isDisplayed());
-//
-//    }
+    @Test
+    public void visitAdminCitiesPageTest() {
+        homePage.enterAdminCitiesPage();
+
+        Assert.assertTrue(driver.getCurrentUrl().endsWith("/admin/cities"));
+        Assert.assertTrue(homePage.getLogoutBtn().isDisplayed());
+    }
+
 
 
 
