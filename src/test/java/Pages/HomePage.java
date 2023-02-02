@@ -16,11 +16,17 @@ public class HomePage extends BasePage{
     @FindBy(xpath = "//*[@id=\"app\"]/div[4]/div/div/div[1]")
     private WebElement dialogMessage;
 
+
     @FindBy(className = "btnAdmin")
     private WebElement adminBtn;
 
     @FindBy(className = "btnAdminCities")
     private WebElement citiesBtn;
+
+    @FindBy(xpath = "//*[@id=\"app\"]/div[1]/div/header/div/div[3]/a[3]")
+    private WebElement myProfileBtn;
+
+
 
     public HomePage(WebDriver driver, WebDriverWait driverWait) {
         super(driver, driverWait);
@@ -40,6 +46,10 @@ public class HomePage extends BasePage{
     public void enterAdminCitiesPage() {
         adminBtn.click();
         citiesBtn.click();
+    }
+
+    public void enterMyProfilePage() {
+        myProfileBtn.click();
     }
 
 }
