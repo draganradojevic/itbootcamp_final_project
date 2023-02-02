@@ -22,7 +22,6 @@ public class AdminCitiesTests extends BaseTest {
         super.beforeClass();
         faker = new Faker();
         city = faker.address().cityName();
-
     }
 
     @BeforeMethod
@@ -82,15 +81,24 @@ public class AdminCitiesTests extends BaseTest {
         driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div[2]/div/div/div/div/div[1]")));
 
 
-
-//        WebElement msg = driver.findElement(By.xpath("//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div[2]/div/div/div/div/div[1]"));
-//        String text = msg.getText();
-
-//        String print = adminCitiesPage.getEditSuccessfullySavedMessage().getText();
-//        System.out.println("Tekst je: " + print);
-
         Assert.assertTrue(adminCitiesPage.getEditSuccessfullySavedMessage().getText().contains("Saved successfully "));
-//        Assert.assertEquals(print, "Saved successfully");
+    }
+
+
+    @Test
+    public void searchCityTest() {
+        adminCitiesPage.search(this.city);
+
+
+    }
+
+
+    @Test
+    public void deleteCityTest() {
+
+
+
+        Assert.assertTrue(adminCitiesPage.getDeleteSuccessfulMessage().getText().contains("Deleted successfully"));
     }
 
 

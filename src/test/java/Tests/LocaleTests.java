@@ -1,6 +1,5 @@
 package Tests;
 
-import Pages.HomePage;
 import Pages.Locales;
 import org.testng.Assert;
 import org.testng.annotations.Test;

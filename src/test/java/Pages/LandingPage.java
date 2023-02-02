@@ -5,7 +5,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class LandingPage extends BasePage{
@@ -16,25 +15,22 @@ public class LandingPage extends BasePage{
     @FindBy(xpath = "//*[@id=\"app\"]/div/div/header/div/div[3]/a[4]/span")
     private WebElement signupBtn;
 
-//    @FindBy(xpath = "//*[@id=\"app\"]/div[1]/div/header/div/div[3]/button")
-//    private WebElement localeBtn;
     @FindBy(className = "btnLocaleActivation")
     private WebElement localeBtn;
 
-    @FindBy(id = "list-item-995")
+    @FindBy(className = "btnEN")
     private WebElement localeEN;
 
-    @FindBy(id = "list-item-997")
+    @FindBy(className = "btnES")
     private WebElement localeES;
 
-//    @FindBy(id = "list-item-999")
-    @FindBy(xpath = "//*[@id=\"list-item-999\"]")
+    @FindBy(className = "btnFR")
     private WebElement localeFR;
 
-    @FindBy(id = "list-item-1001")
+    @FindBy(className = "btnCN")
     private WebElement localeCN;
 
-    @FindBy(id = "list-item-1003")
+    @FindBy(className = "btnUA")
     private WebElement localeUA;
 
 
@@ -56,6 +52,10 @@ public class LandingPage extends BasePage{
         return landingMessage;
     }
 
+    public WebElement getLocaleBtn() {
+        return localeBtn;
+    }
+
     public void enterLoginPage() {
         loginBtn.click();
     }
@@ -63,6 +63,9 @@ public class LandingPage extends BasePage{
     public void enterSignupPage() {
         signupBtn.click();
     }
+
+
+
 
     public void chooseLocale(Locales locales) {
         switch (locales) {
@@ -87,18 +90,8 @@ public class LandingPage extends BasePage{
     public void selectLocale(Locales locale) {
         localeBtn.click();
 
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.className("btnEN")));
 
-//        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("list-item-995")));
         chooseLocale(locale);
-
-//        driver.findElement(By.xpath("//a[text()='" + localeInput + "']")).click();
-
-//        Select selectLocale = new Select(localeBtn);
-//        selectLocale.selectByVisibleText(localeInput);
     }
 }
