@@ -4,7 +4,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -14,6 +13,7 @@ public class SignupTests extends BaseTest{
     @Override
     public void beforeMethod() {
         super.beforeMethod();
+        driverWait.until(ExpectedConditions.elementToBeClickable(landingPage.getSignupBtn()));
         landingPage.enterSignupPage();
     }
 
@@ -56,7 +56,6 @@ public class SignupTests extends BaseTest{
     @Test
     public void validSignupTest() {
         driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"app\"]/div/main/div/div[2]/div/div/div[2]/span/form/div/div[5]/button")));
-
 
         String name = "Dragan Radojevic";
         String email = "dragan5@mail.com";

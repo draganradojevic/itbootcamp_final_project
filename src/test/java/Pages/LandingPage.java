@@ -52,6 +52,10 @@ public class LandingPage extends BasePage{
         return logoutBtn;
     }
 
+    public WebElement getSignupBtn() {
+        return signupBtn;
+    }
+
     public WebElement getLandingMessage() {
         return landingMessage;
     }

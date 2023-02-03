@@ -1,8 +1,7 @@
 package Tests;
 
-import Pages.HomePage;
-import com.github.javafaker.Faker;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
@@ -13,15 +12,10 @@ import org.testng.annotations.Test;
 
 public class AdminCitiesTests extends BaseTest {
 
-    private Faker faker;
-    private String city;
-
     @BeforeClass
     @Override
     public void beforeClass() {
         super.beforeClass();
-        faker = new Faker();
-        city = faker.address().cityName();
     }
 
     @BeforeMethod
@@ -35,7 +29,8 @@ public class AdminCitiesTests extends BaseTest {
 
     @AfterMethod
     public void afterMethod() {
-        adminCitiesPage.getLogoutBtn().click();
+        driverWait.until(ExpectedConditions.presenceOfElementLocated(By.className("btnLogout")));
+        landingPage.getLogoutBtn().click();
     }
 
     @Test
@@ -46,63 +41,75 @@ public class AdminCitiesTests extends BaseTest {
 
     @Test
     public void createNewCityTest() {
-        adminCitiesPage.createNewCity(city);
 
         driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div[3]/div/div/div/div/div[1]")));
+        adminCitiesPage.getNewItemBtn().click();
 
-        System.out.println(adminCitiesPage.getSavedSuccessfullyMessage());
+        driverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("name")));
+        adminCitiesPage.createCity(adminCitiesPage.getNewItemName());
+
+        driverWait.until(ExpectedConditions.elementToBeClickable(By.className("btnSave")));
+        adminCitiesPage.getSaveBtn().click();
+
+        driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div[3]/div/div/div/div")));
 
         Assert.assertTrue(adminCitiesPage.getSavedSuccessfullyMessage().getText().contains("Saved successfully"));
     }
 
-    @Test
+    @Test  (dependsOnMethods = "createNewCityTest")
     public void editCityTest() {
 
         driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div[1]/div[2]/table")));
 
-        for (WebElement city : adminCitiesPage.getCitiesList()) {
+        adminCitiesPage.getEditCityBtn().click();
 
-            if (city.getText().contains(this.city)) {
-                WebElement editButton = city.findElement(By.id("edit"));
+        driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id='app']/div[5]/div/div/div[3]/button[2]")));
+        adminCitiesPage.getEditName().click();
+        adminCitiesPage.getEditName().sendKeys(Keys.CONTROL + "a" + Keys.DELETE);
+        adminCitiesPage.getEditName().sendKeys(adminCitiesPage.getNewItemNameEdited());
 
-                try {
-                    Thread.sleep(3000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                editButton.click();
-
-                adminCitiesPage.getEditInput().sendKeys(" - edited");
-                adminCitiesPage.getSaveBtn().click();
-            }
-        }
+        driverWait.until(ExpectedConditions.elementToBeClickable(adminCitiesPage.getSaveBtn()));
+        adminCitiesPage.getSaveBtn().click();
 
         driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div[2]/div/div/div/div/div[1]")));
 
-
-        Assert.assertTrue(adminCitiesPage.getEditSuccessfullySavedMessage().getText().contains("Saved successfully "));
+        Assert.assertTrue(adminCitiesPage.getEditSuccessfullySavedMessage().getText().contains("Saved successfully"));
     }
 
 
-    @Test
+    @Test (dependsOnMethods = "editCityTest")
     public void searchCityTest() {
-        adminCitiesPage.search(this.city);
+        driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("search")));
 
+        adminCitiesPage.search(adminCitiesPage.getNewItemNameEdited());
+
+        driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div[1]/div[2]/table/tbody/tr/td[2]")));
+
+        WebElement nameOfCity = driver.findElement(By.xpath("//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div[1]/div[2]/table/tbody/tr/td[2]"));
+        String cityName = nameOfCity.getText();
+
+        Assert.assertTrue(cityName.contains(adminCitiesPage.getNewItemNameEdited()));
 
     }
 
 
-    @Test
+    @Test (dependsOnMethods = "searchCityTest")
     public void deleteCityTest() {
 
+    driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("search")));
 
+    adminCitiesPage.getSearchField().sendKeys(adminCitiesPage.getNewItemName());
 
-        Assert.assertTrue(adminCitiesPage.getDeleteSuccessfulMessage().getText().contains("Deleted successfully"));
+    driverWait.until(ExpectedConditions.numberOfElementsToBe(By.xpath("//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div[1]/div[2]/table/tbody/tr/td[2]"), 1));
+
+    Assert.assertTrue(adminCitiesPage.getCityName().getText().contains(adminCitiesPage.getNewItemName()));
+    adminCitiesPage.getDeleteBtn().click();
+
+    driverWait.until(ExpectedConditions.visibilityOf(adminCitiesPage.getDeleteBtnConfirm()));
+    adminCitiesPage.getDeleteBtnConfirm().click();
+
+    driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[contains(text(),'Deleted successfully')]")));
+    Assert.assertTrue(adminCitiesPage.getDeleteSuccessfulMessage().getText().contains("Deleted successfully"));
     }
-
-
-
-
 
 }

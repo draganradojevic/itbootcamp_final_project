@@ -1,6 +1,5 @@
 package Tests;
 
-import Pages.LandingPage;
 import com.github.javafaker.Faker;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -35,6 +34,8 @@ public class LoginTests extends BaseTest{
 
     @Test
     public void inputTypesTest() {
+        driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("email")));
+
         String emailType = loginPage.getLoginEmail().getAttribute("type");
         String passwordType = loginPage.getLoginPassword().getAttribute("type");
 
@@ -44,6 +45,8 @@ public class LoginTests extends BaseTest{
 
     @Test
     public void nonexistingUserTest() {
+        driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("email")));
+
         loginPage.login(faker.internet().emailAddress(), faker.internet().password());
 
         WebElement error = driver.findElement(By.xpath("//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div/div[4]/div/div/div/div/div[1]/ul/li"));
@@ -56,6 +59,9 @@ public class LoginTests extends BaseTest{
     @Test
     public void wrongPasswordTest() {
         String email = "admin@admin.com";
+
+        driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("email")));
+
         loginPage.login(email, faker.internet().password());
 
         WebElement errorPw = driver.findElement(By.xpath("//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div/div[4]/div/div/div/div/div[1]/ul/li"));
@@ -69,6 +75,9 @@ public class LoginTests extends BaseTest{
     public void validLoginTest() {
         String email = "admin@admin.com";
         String password = "12345";
+
+        driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("email")));
+
         loginPage.login(email, password);
 
         driverWait.until(ExpectedConditions.urlToBe("https://vue-demo.daniel-avellaneda.com/home"));
@@ -77,6 +86,8 @@ public class LoginTests extends BaseTest{
 
     @Test
     public void logoutTest() {
+
+        driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("email")));
 
         String email = "admin@admin.com";
         String password = "12345";
