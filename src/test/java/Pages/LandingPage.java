@@ -15,6 +15,9 @@ public class LandingPage extends BasePage{
     @FindBy(xpath = "//*[@id=\"app\"]/div/div/header/div/div[3]/a[4]/span")
     private WebElement signupBtn;
 
+    @FindBy(className = "btnLogout")
+    private WebElement logoutBtn;
+
     @FindBy(className = "btnLocaleActivation")
     private WebElement localeBtn;
 
@@ -33,12 +36,6 @@ public class LandingPage extends BasePage{
     @FindBy(className = "btnUA")
     private WebElement localeUA;
 
-
-
-
-    @FindBy(xpath = "//*[@id=\"app\"]/div[3]/div")
-    private WebElement localeChoices;
-
     @FindBy(xpath = "//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div[1]/div[1]/h1")
     private WebElement landingMessage;
 
@@ -47,6 +44,13 @@ public class LandingPage extends BasePage{
         super(driver, webDriverWait);
     }
 
+    public WebElement getLoginBtn() {
+        return loginBtn;
+    }
+
+    public WebElement getLogoutBtn() {
+        return logoutBtn;
+    }
 
     public WebElement getLandingMessage() {
         return landingMessage;

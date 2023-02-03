@@ -7,6 +7,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.security.Key;
+
 public class ProfilePage extends BasePage{
 
     @FindBy(id = "name")
@@ -33,6 +35,29 @@ public class ProfilePage extends BasePage{
     @FindBy(xpath = "//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div/div[4]/div/div/div/div/div[1]")
     private WebElement savedSuccessfullyMessage;
 
+    public WebElement getName() {
+        return name;
+    }
+
+    public WebElement getPhone() {
+        return phone;
+    }
+
+    public WebElement getCity() {
+        return city;
+    }
+
+    public WebElement getCountry() {
+        return country;
+    }
+
+    public WebElement getUrlTwitter() {
+        return urlTwitter;
+    }
+
+    public WebElement getUrlGithub() {
+        return urlGithub;
+    }
 
     public ProfilePage(WebDriver driver, WebDriverWait driverWait) {
         super(driver, driverWait);
@@ -47,6 +72,7 @@ public class ProfilePage extends BasePage{
     }
 
     public void editProfile(String nameInput, String phoneInput, String cityInput, String countryInput, String twitterInput, String githubInput) {
+        name.sendKeys(Keys.CONTROL + "a" + Keys.DELETE);
         name.sendKeys(nameInput);
         phone.sendKeys(phoneInput);
 

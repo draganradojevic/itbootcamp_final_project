@@ -8,6 +8,7 @@ public class LocaleTests extends BaseTest{
 
     @Test
     public void setLocaleToESTest() {
+
         landingPage.selectLocale(Locales.ES);
 
         Assert.assertTrue(landingPage.getLandingMessage().getText().contains("Página de aterrizaje"));

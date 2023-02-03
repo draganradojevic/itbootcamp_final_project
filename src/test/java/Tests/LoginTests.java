@@ -12,14 +12,12 @@ import org.testng.annotations.Test;
 
 public class LoginTests extends BaseTest{
 
-    private LandingPage landingPage;
     private Faker faker;
 
     @BeforeClass
     @Override
     public void beforeClass() {
         super.beforeClass();
-        landingPage = new LandingPage(driver, driverWait);
         faker = new Faker();
     }
 
