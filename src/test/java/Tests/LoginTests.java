@@ -57,17 +57,16 @@ public class LoginTests extends BaseTest{
     }
 
     @Test
-    public void wrongPasswordTest() {
-        String email = "admin@admin.com";
-
+    public void inputWrongPasswordTest() {
         driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("email")));
 
-        loginPage.login(email, faker.internet().password());
+        String email = "admin@admin.com";
+        String password = faker.internet().password();
+        loginPage.login(email, password);
 
-        WebElement errorPw = driver.findElement(By.xpath("//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div/div[4]/div/div/div/div/div[1]/ul/li"));
-        String errorMessage = errorPw.getText();
+        driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div/div[4]/div/div/div/div/div[1]")));
 
-        Assert.assertEquals(errorMessage, "Wrong password");
+        Assert.assertTrue(loginPage.getMessage().contains("Wrong password"));
         Assert.assertTrue(driver.getCurrentUrl().endsWith("/login"));
     }
 
@@ -100,12 +99,6 @@ public class LoginTests extends BaseTest{
         Assert.assertTrue(driver.getCurrentUrl().endsWith("/login"));
 
         driver.get("https://vue-demo.daniel-avellaneda.com/home");
-
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
         Assert.assertTrue(driver.getCurrentUrl().endsWith("/login"));
     }

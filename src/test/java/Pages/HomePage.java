@@ -10,9 +10,8 @@ public class HomePage extends BasePage{
     @FindBy(xpath = "//*[@id=\"app\"]/div[1]/div/header/div/div[3]/button[2]/span")
     private WebElement logoutBtn;
 
-    @FindBy(xpath = "//*[@id=\"app\"]/div[4]/div/div/div[1]")
+    @FindBy(xpath = "//*[@id=\"app\"]/div[4]/div/div")
     private WebElement dialogMessage;
-
 
     @FindBy(className = "btnAdmin")
     private WebElement adminBtn;
@@ -37,8 +36,6 @@ public class HomePage extends BasePage{
     public String getDialogMessage() {
         return dialogMessage.getText();
     }
-
-
 
     public void enterAdminCitiesPage() {
         adminBtn.click();

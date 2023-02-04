@@ -1,7 +1,7 @@
 package Tests;
 
+import com.github.javafaker.Faker;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
@@ -9,16 +9,19 @@ import org.testng.annotations.Test;
 
 public class SignupTests extends BaseTest{
 
+    private Faker faker;
+
     @BeforeMethod
     @Override
     public void beforeMethod() {
         super.beforeMethod();
+        faker = new Faker();
         driverWait.until(ExpectedConditions.elementToBeClickable(landingPage.getSignupBtn()));
         landingPage.enterSignupPage();
     }
 
     @Test
-    public void visitSignupPageTest() {
+    public void signupPageVisitTest() {
         driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"app\"]/div/main/div/div[2]/div/div/div[1]/h1")));
 
         Assert.assertTrue(driver.getCurrentUrl().endsWith("/signup"));
@@ -46,10 +49,7 @@ public class SignupTests extends BaseTest{
 
         driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div/div[3]/div/div/div/div/div[1]")));
 
-        WebElement error = driver.findElement(By.xpath("//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div/div[3]/div/div/div/div/div[1]/ul/li"));
-        String errorMessage = error.getText();
-
-        Assert.assertEquals(errorMessage, "E-mail already exists");
+        Assert.assertTrue(signupPage.getMessage().contains("E-mail already exists"));
         Assert.assertTrue(driver.getCurrentUrl().endsWith("/signup"));
     }
 
@@ -57,22 +57,16 @@ public class SignupTests extends BaseTest{
     public void validSignupTest() {
         driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"app\"]/div/main/div/div[2]/div/div/div[2]/span/form/div/div[5]/button")));
 
-        String name = "Dragan Radojevic";
-        String email = "dragan5@mail.com";
-        String password = "12344321";
-        String confirmPassword = "12344321";
+        String name = faker.name().fullName();
+        String email = faker.internet().emailAddress();
+        String password = faker.internet().password();
+        String confirmPassword = password;
 
         signupPage.signup(name, email, password, confirmPassword);
 
         driverWait.until(ExpectedConditions.urlContains("/home"));
 
         driverWait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath("//*[@id=\"app\"]/div[4]/div/div/div[1]"), "Verify your account"));
-        Assert.assertTrue(homePage.getDialogMessage().contains("Verify your account"));
+        Assert.assertTrue(homePage.getDialogMessage().contains("IMPORTANT: Verify your account"));
     }
-
-
-
-
-
-
 }
