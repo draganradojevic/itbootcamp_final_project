@@ -56,7 +56,6 @@ public class AdminCitiesTests extends BaseTest {
 
     @Test
     public void editCityTest() {
-//        createNewCityTest();
         driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div[3]/div/div/div/div/div[1]")));
         adminCitiesPage.createCity(city);
 
@@ -65,30 +64,27 @@ public class AdminCitiesTests extends BaseTest {
     }
 
     @Test
-    public void searchCityTest() {
-//        editCityTest();
-
+    public void citySearchTest() {
         driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div[3]/div/div/div/div/div[1]")));
         adminCitiesPage.createCity(city);
         adminCitiesPage.editCity(city);
 
+        driverWait.until(ExpectedConditions.visibilityOf(adminCitiesPage.getSearchField()));
         adminCitiesPage.searchCity(editedCity);
-        driverWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/div/div[1]/main/div/div[2]/div/div[1]/div[2]/table/tbody/tr/td[2]")));
+        driverWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div[1]/div[2]/table/tbody/tr/td[2]")));
 
-        WebElement city = driver.findElement(By.xpath("/html/body/div/div[1]/main/div/div[2]/div/div[1]/div[2]/table/tbody/tr[1]/td[2]"));
-        String cityName = city.getText();
-
-        Assert.assertTrue(cityName.contains(editedCity));
+        Assert.assertEquals(adminCitiesPage.getNameOfCity(), editedCity);
     }
 
     @Test
     public void deleteCityTest() {
         driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div[3]/div/div/div/div/div[1]")));
+
         adminCitiesPage.createCity(city);
         adminCitiesPage.editCity(city);
         adminCitiesPage.searchCity(editedCity);
+
 //        driverWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/div/div[1]/main/div/div[2]/div/div[1]/div[2]/table/tbody/tr/td[2]")));
-//        searchCityTest();
         driverWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/div/div[1]/main/div/div[2]/div/div[1]/div[2]/table/tbody/tr/td[2]")));
 
         adminCitiesPage.deleteCity(editedCity);
@@ -98,7 +94,6 @@ public class AdminCitiesTests extends BaseTest {
         WebElement deleteMsg = driver.findElement(By.xpath("//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div[3]/div/div/div/div/div[1]"));
         String deleteMsgTxt = deleteMsg.getText();
 
-        System.out.println("1:" + deleteMsgTxt + "\n 2: Deleted successfully");
         Assert.assertTrue(deleteMsgTxt.contains("Deleted successfully"));
     }
 }

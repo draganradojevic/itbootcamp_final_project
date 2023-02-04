@@ -34,6 +34,10 @@ public class AdminCitiesPage extends BasePage{
     @FindBy(id = "search")
     private WebElement searchField;
 
+    @FindBy(xpath = "//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div[1]/div[2]/table/tbody/tr/td[2]")
+//    @FindBy(xpath = "/html/body/div/div[1]/main/div/div[2]/div/div[1]/div[2]/table/tbody/tr[1]/td[2]")
+    private WebElement nameOfCity;
+
     @FindBy(id = "delete")
     private WebElement deleteBtn;
 
@@ -54,20 +58,21 @@ public class AdminCitiesPage extends BasePage{
         return logoutBtn;
     }
 
-    public WebElement getNewItemBtn() {
-        return newItemBtn;
-    }
-
-    public WebElement getNewItemName() {
-        return newItemName;
-    }
-
     public WebElement getSavedSuccessfullyMessage() {
         return savedSuccessfullyMessage;
     }
 
     public WebElement getEditName() {
         return editName;
+    }
+
+    public WebElement getSearchField() {
+        return searchField;
+    }
+
+    public String getNameOfCity() {
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div[1]/div[2]/table/tbody/tr/td[2]")));
+        return nameOfCity.getText();
     }
 
     public void createCity(String inputCityName) {
@@ -90,8 +95,10 @@ public class AdminCitiesPage extends BasePage{
     }
 
     public void searchCity(String inputCityName) {
-//        searchField.sendKeys(Keys.CONTROL + "a" + Keys.DELETE);
-        searchField.clear();
+        searchField.click();
+        searchField.sendKeys(Keys.CONTROL + "a" + Keys.DELETE);
+//        searchField.clear();
+
         searchField.sendKeys(inputCityName);
     }
 
