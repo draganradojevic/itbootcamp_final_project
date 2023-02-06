@@ -1,10 +1,21 @@
 package Tests;
 
+import Pages.LandingPage;
 import Pages.Locales;
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 public class LocaleTests extends BaseTest{
+
+    private LandingPage landingPage;
+
+    @BeforeClass
+    @Override
+    public void beforeClass() {
+        super.beforeClass();
+        landingPage = new LandingPage(driver, driverWait);
+    }
 
     @Test
     public void setLocaleToESTest() {

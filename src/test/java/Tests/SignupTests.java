@@ -1,5 +1,8 @@
 package Tests;
 
+import Pages.HomePage;
+import Pages.LandingPage;
+import Pages.SignupPage;
 import com.github.javafaker.Faker;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -10,12 +13,18 @@ import org.testng.annotations.Test;
 public class SignupTests extends BaseTest{
 
     private Faker faker;
+    private LandingPage landingPage;
+    private SignupPage signupPage;
+    private HomePage homePage;
 
     @BeforeMethod
     @Override
     public void beforeMethod() {
         super.beforeMethod();
         faker = new Faker();
+        landingPage = new LandingPage(driver, driverWait);
+        signupPage = new SignupPage(driver, driverWait);
+        homePage = new HomePage(driver, driverWait);
         driverWait.until(ExpectedConditions.elementToBeClickable(landingPage.getSignupBtn()));
         landingPage.enterSignupPage();
     }

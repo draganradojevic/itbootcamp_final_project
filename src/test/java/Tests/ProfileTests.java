@@ -1,6 +1,9 @@
 package Tests;
 
+import Pages.HomePage;
+import Pages.LandingPage;
 import Pages.ProfilePage;
+import Pages.SignupPage;
 import com.github.javafaker.Faker;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -14,6 +17,9 @@ import org.testng.annotations.Test;
 public class ProfileTests extends BaseTest {
 
     private Faker faker;
+    private LandingPage landingPage;
+    private SignupPage signupPage;
+    private HomePage homePage;
     private ProfilePage profilePage;
 
     @BeforeClass
@@ -21,8 +27,10 @@ public class ProfileTests extends BaseTest {
     public void beforeClass() {
         super.beforeClass();
         faker = new Faker();
+        landingPage = new LandingPage(driver, driverWait);
+        signupPage = new SignupPage(driver, driverWait);
+        homePage = new HomePage(driver, driverWait);
         profilePage = new ProfilePage(driver, driverWait);
-
     }
 
     @Test

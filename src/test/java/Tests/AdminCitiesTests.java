@@ -1,5 +1,9 @@
 package Tests;
 
+import Pages.AdminCitiesPage;
+import Pages.HomePage;
+import Pages.LandingPage;
+import Pages.LoginPage;
 import com.github.javafaker.Faker;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -13,6 +17,10 @@ import org.testng.annotations.Test;
 public class AdminCitiesTests extends BaseTest {
 
     private Faker faker;
+    private LandingPage landingPage;
+    private LoginPage loginPage;
+    private HomePage homePage;
+    private AdminCitiesPage adminCitiesPage;
     private String city;
     private String editedCity;
 
@@ -21,6 +29,10 @@ public class AdminCitiesTests extends BaseTest {
     public void beforeClass() {
         super.beforeClass();
         faker = new Faker();
+        landingPage = new LandingPage(driver, driverWait);
+        loginPage = new LoginPage(driver, driverWait);
+        homePage = new HomePage(driver, driverWait);
+        adminCitiesPage = new AdminCitiesPage(driver, driverWait);
         city = faker.address().cityName();
         editedCity = city + " - edited";
     }
