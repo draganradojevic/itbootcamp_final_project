@@ -42,7 +42,7 @@ public class AdminCitiesTests extends BaseTest {
     public void beforeMethod() {
         super.beforeMethod();
         landingPage.enterLoginPage();
-        loginPage.login("admin@admin.com", "12345");
+        loginPage.login(VALID_EMAIL, VALID_PASSWORD);
         homePage.enterAdminCitiesPage();
     }
 

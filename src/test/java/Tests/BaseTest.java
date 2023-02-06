@@ -15,6 +15,8 @@ public abstract class BaseTest {
     protected WebDriverWait driverWait;
 
     protected final String BASEURL = "https://vue-demo.daniel-avellaneda.com";
+    protected final String VALID_EMAIL = "admin@admin.com";
+    protected final String VALID_PASSWORD = "12345";
 
     @BeforeClass
     public void beforeClass() {

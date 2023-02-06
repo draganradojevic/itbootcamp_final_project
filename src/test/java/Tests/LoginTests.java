@@ -69,9 +69,8 @@ public class LoginTests extends BaseTest{
     public void inputWrongPasswordTest() {
         driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("email")));
 
-        String email = "admin@admin.com";
         String password = faker.internet().password();
-        loginPage.login(email, password);
+        loginPage.login(VALID_EMAIL, password);
 
         driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div/div[4]/div/div/div/div/div[1]")));
 
@@ -81,12 +80,9 @@ public class LoginTests extends BaseTest{
 
     @Test
     public void validLoginTest() {
-        String email = "admin@admin.com";
-        String password = "12345";
-
         driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("email")));
 
-        loginPage.login(email, password);
+        loginPage.login(VALID_EMAIL, VALID_PASSWORD);
 
         driverWait.until(ExpectedConditions.urlToBe("https://vue-demo.daniel-avellaneda.com/home"));
         Assert.assertTrue(driver.getCurrentUrl().endsWith("/home"));
@@ -94,12 +90,9 @@ public class LoginTests extends BaseTest{
 
     @Test
     public void logoutTest() {
-
         driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("email")));
 
-        String email = "admin@admin.com";
-        String password = "12345";
-        loginPage.login(email, password);
+        loginPage.login(VALID_EMAIL, VALID_PASSWORD);
 
         Assert.assertTrue(homePage.getLogoutBtn().isDisplayed());
 
