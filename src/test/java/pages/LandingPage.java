@@ -44,10 +44,6 @@ public class LandingPage extends BasePage{
         super(driver, webDriverWait);
     }
 
-    public WebElement getLoginBtn() {
-        return loginBtn;
-    }
-
     public WebElement getLogoutBtn() {
         return logoutBtn;
     }
@@ -56,13 +52,10 @@ public class LandingPage extends BasePage{
         return signupBtn;
     }
 
-    public WebElement getLandingMessage() {
-        return landingMessage;
+    public String getLandingMessage() {
+        return landingMessage.getText();
     }
 
-    public WebElement getLocaleBtn() {
-        return localeBtn;
-    }
 
     public void enterLoginPage() {
         loginBtn.click();

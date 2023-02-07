@@ -1,9 +1,11 @@
 package pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ProfilePage extends BasePage{
@@ -60,12 +62,16 @@ public class ProfilePage extends BasePage{
         super(driver, driverWait);
     }
 
-    public WebElement getSaveBtn() {
-        return saveBtn;
-    }
-
     public WebElement getSavedSuccessfullyMessage() {
         return savedSuccessfullyMessage;
+    }
+
+    public void waitForEditProfileForm() {
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div/div[2]/span/form")));
+    }
+
+    public void waitForSavedSuccessfullyMessage() {
+        webDriverWait.until(ExpectedConditions.visibilityOf(savedSuccessfullyMessage));
     }
 
     public void editProfile(String nameInput, String phoneInput, String cityInput, String countryInput, String twitterInput, String githubInput) {
@@ -83,4 +89,29 @@ public class ProfilePage extends BasePage{
         urlGithub.sendKeys(githubInput);
         saveBtn.click();
     }
+
+    public String getNameValue() {
+        return checkAttribute(getName(), "value");
+    }
+
+    public String getPhoneValue() {
+        return checkAttribute(getPhone(), "value");
+    }
+
+    public String getCityValue() {
+        return checkAttribute(getCity(), "value");
+    }
+
+    public String getCountryValue() {
+        return checkAttribute(getCountry(), "value");
+    }
+
+    public String getTwitterURLValue() {
+        return checkAttribute(getUrlTwitter(), "value");
+    }
+
+    public String getGithubURLValue() {
+        return checkAttribute(getUrlGithub(), "value");
+    }
+
 }

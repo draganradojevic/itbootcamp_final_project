@@ -37,10 +37,10 @@ public class LoginTests extends BaseTest{
 
     @Test
     public void inputTypesTest() {
-        driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("email")));
+        loginPage.waitForEmailField();
 
-        String emailType = loginPage.getLoginEmail().getAttribute("type");
-        String passwordType = loginPage.getLoginPassword().getAttribute("type");
+        String emailType = loginPage.checkAttribute(loginPage.getLoginEmail(), "type");
+        String passwordType = loginPage.checkAttribute(loginPage.getLoginPassword(), "type");
 
         Assert.assertEquals(emailType, "email");
         Assert.assertEquals(passwordType, "password");
@@ -48,7 +48,7 @@ public class LoginTests extends BaseTest{
 
     @Test
     public void nonexistingUserTest() {
-        driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("email")));
+        loginPage.waitForEmailField();
 
         loginPage.login(FakerClass.getFakeEmail(), FakerClass.getFakePassword());
 
@@ -58,7 +58,7 @@ public class LoginTests extends BaseTest{
 
     @Test
     public void inputWrongPasswordTest() {
-        driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("email")));
+        loginPage.waitForEmailField();
 
         loginPage.login(VALID_EMAIL, FakerClass.getFakePassword());
 
@@ -70,7 +70,7 @@ public class LoginTests extends BaseTest{
 
     @Test
     public void validLoginTest() {
-        driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("email")));
+        loginPage.waitForEmailField();
 
         loginPage.login(VALID_EMAIL, VALID_PASSWORD);
 
@@ -80,7 +80,7 @@ public class LoginTests extends BaseTest{
 
     @Test
     public void logoutTest() {
-        driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("email")));
+        loginPage.waitForEmailField();
 
         loginPage.login(VALID_EMAIL, VALID_PASSWORD);
 

@@ -13,6 +13,9 @@ public class AdminCitiesPage extends BasePage{
     @FindBy(xpath = "//*[@id=\"app\"]/div[1]/div/header/div/div[3]/button[2]")
     private WebElement logoutBtn;
 
+    @FindBy(xpath = "//*[@id=\"app\"]/div[1]/main/div/div[2]")
+    private WebElement container;
+
     @FindBy(className = "btnNewItem")
     private WebElement newItemBtn;
 
@@ -47,6 +50,9 @@ public class AdminCitiesPage extends BasePage{
     @FindBy(css = "#app > div.v-dialog__content.v-dialog__content--active > div > div > div.v-card__actions > button.v-btn.v-btn--text.theme--light.v-size--default.red--text.text--lighten3")
     private WebElement deleteBtnConfirm;
 
+    @FindBy(xpath = "//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div[3]/div/div/div/div")
+    private WebElement deleteSuccessfullyMessage;
+
 
     public AdminCitiesPage(WebDriver driver, WebDriverWait driverWait) {
         super(driver, driverWait);
@@ -57,8 +63,12 @@ public class AdminCitiesPage extends BasePage{
         return logoutBtn;
     }
 
-    public WebElement getSavedSuccessfullyMessage() {
-        return savedSuccessfullyMessage;
+    public String getSavedSuccessfullyMessage() {
+        return savedSuccessfullyMessage.getText();
+    }
+
+    public String getDeleteSuccessfullyMessage() {
+        return deleteSuccessfullyMessage.getText();
     }
 
     public WebElement getEditName() {
@@ -105,6 +115,26 @@ public class AdminCitiesPage extends BasePage{
 
         webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"app\"]/div[6]/div/div")));
         deleteBtnConfirm.click();
+    }
+
+    public void waitForLogoutButtonPresence() {
+        webDriverWait.until(ExpectedConditions.presenceOfElementLocated(By.className("btnLogout")));
+    }
+
+    public void waitForContainerToBeVisible() {
+        webDriverWait.until(ExpectedConditions.visibilityOf(container));
+    }
+
+    public void waitForSearchField() {
+        webDriverWait.until(ExpectedConditions.visibilityOf(searchField));
+    }
+
+    public void waitForCityName() {
+        webDriverWait.until(ExpectedConditions.visibilityOf(nameOfCity));
+    }
+
+    public void waitForDeletedSuccessfullyMessage() {
+        webDriverWait.until(ExpectedConditions.visibilityOf(deleteSuccessfullyMessage));
     }
 
 }

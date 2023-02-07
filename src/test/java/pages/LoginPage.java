@@ -55,6 +55,8 @@ public class LoginPage extends BasePage {
         loginButton.click();
     }
 
-
+    public void waitForEmailField() {
+        webDriverWait.until(ExpectedConditions.visibilityOf(loginEmail));
+    }
 
 }

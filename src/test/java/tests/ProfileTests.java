@@ -1,13 +1,10 @@
 package tests;
 
 import pages.HomePage;
-import pages.LandingPage;
 import pages.ProfilePage;
 import pages.SignupPage;
-import com.github.javafaker.Faker;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
@@ -40,24 +37,17 @@ public class ProfileTests extends BaseTest {
     public void editProfileTest() {
         landingPage.enterSignupPage();
 
-//        String signupName = faker.name().firstName();
-//        String signupEmail = faker.internet().emailAddress();
-//        String signupPassword = faker.internet().password();
-//        String signupConfirmPassword = signupPassword;
-
         String signupName = FakerClass.getFakeName();
         String signupEmail = FakerClass.getFakeEmail();
         String signupPassword = FakerClass.getFakePassword();
         signupPage.signup(signupName, signupEmail, signupPassword, signupPassword);
 
-        driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"app\"]/div[4]/div/div/div[3]/button")));
-        WebElement closeBtn = driver.findElement(By.xpath("//*[@id=\"app\"]/div[4]/div/div/div[3]/button"));
-        closeBtn.click();
+        homePage.waitForDialogMessage();
+        homePage.getCloseBtn().click();
 
         homePage.enterMyProfilePage();
 
-        driverWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div/div[2]/span/form")));
-
+        profilePage.waitForEditProfileForm();
 
         String editName = FakerClass.getFakeName();
         String editPhone = FakerClass.getFakePhone();
@@ -66,20 +56,17 @@ public class ProfileTests extends BaseTest {
         String editTwitter = "https://www.twitter.com/" + editName.toLowerCase();
         String editGithub = "https://www.github.com/" + editName.toLowerCase();
 
-
-
         profilePage.editProfile(editName, editPhone, editCity, editCountry, editTwitter, editGithub);
 
-        driverWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div/div[4]/div/div/div/div")));
+        profilePage.waitForSavedSuccessfullyMessage();
 
         Assert.assertTrue(profilePage.getSavedSuccessfullyMessage().getText().contains("Profile saved successfuly"));
 
-        Assert.assertEquals(profilePage.getName().getAttribute("value"), editName);
-        Assert.assertEquals(profilePage.getPhone().getAttribute("value"), editPhone);
-        Assert.assertEquals(profilePage.getCity().getAttribute("value"), editCity);
-        Assert.assertEquals(profilePage.getCountry().getAttribute("value"), editCountry);
-        Assert.assertEquals(profilePage.getUrlTwitter().getAttribute("value"), editTwitter);
-        Assert.assertEquals(profilePage.getUrlGithub().getAttribute("value"), editGithub);
-
+        Assert.assertEquals(profilePage.getNameValue(), editName);
+        Assert.assertEquals(profilePage.getPhoneValue(), editPhone);
+        Assert.assertEquals(profilePage.getCityValue(), editCity);
+        Assert.assertEquals(profilePage.getCountryValue(), editCountry);
+        Assert.assertEquals(profilePage.getTwitterURLValue(), editTwitter);
+        Assert.assertEquals(profilePage.getGithubURLValue(), editGithub);
     }
 }

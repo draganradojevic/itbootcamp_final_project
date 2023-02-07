@@ -3,6 +3,7 @@ package pages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class HomePage extends BasePage{
@@ -18,6 +19,9 @@ public class HomePage extends BasePage{
 
     @FindBy(className = "btnAdminCities")
     private WebElement citiesBtn;
+
+    @FindBy(className = "btnClose")
+    private WebElement closeBtn;
 
     @FindBy(xpath = "//*[@id=\"app\"]/div[1]/div/header/div/div[3]/a[3]")
     private WebElement myProfileBtn;
@@ -37,6 +41,10 @@ public class HomePage extends BasePage{
         return dialogMessage.getText();
     }
 
+    public WebElement getCloseBtn() {
+        return closeBtn;
+    }
+
     public void enterAdminCitiesPage() {
         adminBtn.click();
         citiesBtn.click();
@@ -44,6 +52,16 @@ public class HomePage extends BasePage{
 
     public void enterMyProfilePage() {
         myProfileBtn.click();
+    }
+
+
+    public void waitForURLToContainHome() {
+        webDriverWait.until(ExpectedConditions.urlContains("/home"));
+    }
+
+    public void waitForDialogMessage() {
+        webDriverWait.until(ExpectedConditions.textToBePresentInElement(dialogMessage, "Verify your account"));
+
     }
 
 }

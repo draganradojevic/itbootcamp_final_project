@@ -2,7 +2,6 @@ package tests;
 
 import pages.HomePage;
 import pages.SignupPage;
-import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
@@ -26,23 +25,23 @@ public class SignupTests extends BaseTest{
 
     @Test
     public void signupPageVisitTest() {
-        driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"app\"]/div/main/div/div[2]/div/div/div[1]/h1")));
+        signupPage.waitForSignupNameField();
 
         Assert.assertTrue(driver.getCurrentUrl().endsWith("/signup"));
     }
 
     @Test
     public void signupFieldInputTypeTest() {
-        driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"app\"]/div/main/div/div[2]/div/div/div[2]/span/form/div/div[5]/button")));
+        signupPage.waitForSignupNameField();
 
-        Assert.assertEquals(signupPage.getSignupEmail().getAttribute("type"), "email");
-        Assert.assertEquals(signupPage.getSignupPassword().getAttribute("type"), "password");
-        Assert.assertEquals(signupPage.getSignupConfirmPassword().getAttribute("type"), "password");
+        Assert.assertEquals(signupPage.checkAttribute(signupPage.getSignupEmail(),"type"), "email");
+        Assert.assertEquals(signupPage.checkAttribute(signupPage.getSignupPassword(), "type"), "password");
+        Assert.assertEquals(signupPage.checkAttribute(signupPage.getSignupConfirmPassword(), "type"), "password");
     }
 
     @Test
     public void userAlreadyExistsTest() {
-        driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"app\"]/div/main/div/div[2]/div/div/div[2]/span/form/div/div[5]/button")));
+        signupPage.waitForSignupNameField();
 
         String name = "Test Test";
         String email = "admin@admin.com";
@@ -51,7 +50,7 @@ public class SignupTests extends BaseTest{
 
         signupPage.signup(name, email, password, confirmPassword);
 
-        driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div/div[3]/div/div/div/div/div[1]")));
+        signupPage.waitForErrorMessage();
 
         Assert.assertTrue(signupPage.getMessage().contains("E-mail already exists"));
         Assert.assertTrue(driver.getCurrentUrl().endsWith("/signup"));
@@ -59,7 +58,7 @@ public class SignupTests extends BaseTest{
 
     @Test
     public void validSignupTest() {
-        driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"app\"]/div/main/div/div[2]/div/div/div[2]/span/form/div/div[5]/button")));
+        signupPage.waitForSignupNameField();
 
         String name = FakerClass.getFakeName();
         String email = FakerClass.getFakeEmail();
@@ -67,9 +66,11 @@ public class SignupTests extends BaseTest{
 
         signupPage.signup(name, email, password, password);
 
-        driverWait.until(ExpectedConditions.urlContains("/home"));
+        homePage.waitForURLToContainHome();
 
-        driverWait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath("//*[@id=\"app\"]/div[4]/div/div/div[1]"), "Verify your account"));
+        homePage.waitForDialogMessage();
+
+        System.out.println(homePage.getDialogMessage() + " / IMPORTANT: Verify your account");
         Assert.assertTrue(homePage.getDialogMessage().contains("IMPORTANT: Verify your account"));
     }
 }
