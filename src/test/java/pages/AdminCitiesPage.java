@@ -1,4 +1,4 @@
-package Pages;
+package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -34,14 +34,13 @@ public class AdminCitiesPage extends BasePage{
     @FindBy(id = "search")
     private WebElement searchField;
 
+    //    @FindBy(xpath = "/html/body/div/div[1]/main/div/div[2]/div/div[1]/div[2]/table/tbody/tr[1]/td[2]")
     @FindBy(xpath = "//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div[1]/div[2]/table/tbody/tr/td[2]")
-//    @FindBy(xpath = "/html/body/div/div[1]/main/div/div[2]/div/div[1]/div[2]/table/tbody/tr[1]/td[2]")
     private WebElement nameOfCity;
 
     @FindBy(id = "delete")
     private WebElement deleteBtn;
 
-    //*[@id="app"]/div[7]/div/div/div[2]/button[2]
 //    @FindBy(xpath = "//*[@id=\"app\"]/div[6]/div/div/div[2]/button[2]")
 //    @FindBy(xpath = "//*[@id=\"app\"]/div[7]/div/div/div[2]/button[2]")
 //    @FindBy(className = "text--lighten3")
@@ -97,7 +96,6 @@ public class AdminCitiesPage extends BasePage{
     public void searchCity(String inputCityName) {
         searchField.click();
         searchField.sendKeys(Keys.CONTROL + "a" + Keys.DELETE);
-//        searchField.clear();
 
         searchField.sendKeys(inputCityName);
     }

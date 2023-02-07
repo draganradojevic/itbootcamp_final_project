@@ -1,19 +1,16 @@
-package Tests;
+package tests;
 
-import Pages.HomePage;
-import Pages.LandingPage;
-import Pages.SignupPage;
-import com.github.javafaker.Faker;
+import pages.HomePage;
+import pages.SignupPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import utils.FakerClass;
 
 public class SignupTests extends BaseTest{
 
-    private Faker faker;
-    private LandingPage landingPage;
     private SignupPage signupPage;
     private HomePage homePage;
 
@@ -21,8 +18,6 @@ public class SignupTests extends BaseTest{
     @Override
     public void beforeMethod() {
         super.beforeMethod();
-        faker = new Faker();
-        landingPage = new LandingPage(driver, driverWait);
         signupPage = new SignupPage(driver, driverWait);
         homePage = new HomePage(driver, driverWait);
         driverWait.until(ExpectedConditions.elementToBeClickable(landingPage.getSignupBtn()));
@@ -66,12 +61,11 @@ public class SignupTests extends BaseTest{
     public void validSignupTest() {
         driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"app\"]/div/main/div/div[2]/div/div/div[2]/span/form/div/div[5]/button")));
 
-        String name = faker.name().fullName();
-        String email = faker.internet().emailAddress();
-        String password = faker.internet().password();
-        String confirmPassword = password;
+        String name = FakerClass.getFakeName();
+        String email = FakerClass.getFakeEmail();
+        String password = FakerClass.getFakePassword();
 
-        signupPage.signup(name, email, password, confirmPassword);
+        signupPage.signup(name, email, password, password);
 
         driverWait.until(ExpectedConditions.urlContains("/home"));
 

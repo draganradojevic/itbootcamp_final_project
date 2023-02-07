@@ -1,23 +1,19 @@
-package Tests;
+package tests;
 
-import Pages.AdminCitiesPage;
-import Pages.HomePage;
-import Pages.LandingPage;
-import Pages.LoginPage;
-import com.github.javafaker.Faker;
+import pages.AdminCitiesPage;
+import pages.HomePage;
+import pages.LoginPage;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import utils.FakerClass;
 
 public class AdminCitiesTests extends BaseTest {
 
-    private Faker faker;
-    private LandingPage landingPage;
     private LoginPage loginPage;
     private HomePage homePage;
     private AdminCitiesPage adminCitiesPage;
@@ -28,12 +24,10 @@ public class AdminCitiesTests extends BaseTest {
     @Override
     public void beforeClass() {
         super.beforeClass();
-        faker = new Faker();
-        landingPage = new LandingPage(driver, driverWait);
         loginPage = new LoginPage(driver, driverWait);
         homePage = new HomePage(driver, driverWait);
         adminCitiesPage = new AdminCitiesPage(driver, driverWait);
-        city = faker.address().cityName();
+        city = FakerClass.getFakeCity();
         editedCity = city + " - edited";
     }
 
@@ -103,9 +97,6 @@ public class AdminCitiesTests extends BaseTest {
 
         driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div[3]/div/div/div/div/div[1]")));
 
-        WebElement deleteMsg = driver.findElement(By.xpath("//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div[3]/div/div/div/div/div[1]"));
-        String deleteMsgTxt = deleteMsg.getText();
-
-        Assert.assertTrue(deleteMsgTxt.contains("Deleted successfully"));
+        Assert.assertTrue(adminCitiesPage.getSavedSuccessfullyMessage().getText().contains("Deleted successfully"));
     }
 }

@@ -1,9 +1,9 @@
-package Tests;
+package tests;
 
-import Pages.HomePage;
-import Pages.LandingPage;
-import Pages.ProfilePage;
-import Pages.SignupPage;
+import pages.HomePage;
+import pages.LandingPage;
+import pages.ProfilePage;
+import pages.SignupPage;
 import com.github.javafaker.Faker;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -13,11 +13,10 @@ import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import utils.FakerClass;
 
 public class ProfileTests extends BaseTest {
 
-    private Faker faker;
-    private LandingPage landingPage;
     private SignupPage signupPage;
     private HomePage homePage;
     private ProfilePage profilePage;
@@ -26,24 +25,30 @@ public class ProfileTests extends BaseTest {
     @Override
     public void beforeClass() {
         super.beforeClass();
-        faker = new Faker();
-        landingPage = new LandingPage(driver, driverWait);
         signupPage = new SignupPage(driver, driverWait);
         homePage = new HomePage(driver, driverWait);
         profilePage = new ProfilePage(driver, driverWait);
     }
 
+    @AfterMethod
+    public void afterMethod() {
+        driverWait.until(ExpectedConditions.presenceOfElementLocated(By.className("btnLogout")));
+        landingPage.getLogoutBtn().sendKeys(Keys.ENTER);
+    }
+
     @Test
     public void editProfileTest() {
-
         landingPage.enterSignupPage();
 
-        String signupName = faker.name().firstName();
-        String signupEmail = faker.internet().emailAddress();
-        String signupPassword = faker.internet().password();
-        String signupConfirmPassword = signupPassword;
+//        String signupName = faker.name().firstName();
+//        String signupEmail = faker.internet().emailAddress();
+//        String signupPassword = faker.internet().password();
+//        String signupConfirmPassword = signupPassword;
 
-        signupPage.signup(signupName, signupEmail, signupPassword, signupConfirmPassword);
+        String signupName = FakerClass.getFakeName();
+        String signupEmail = FakerClass.getFakeEmail();
+        String signupPassword = FakerClass.getFakePassword();
+        signupPage.signup(signupName, signupEmail, signupPassword, signupPassword);
 
         driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"app\"]/div[4]/div/div/div[3]/button")));
         WebElement closeBtn = driver.findElement(By.xpath("//*[@id=\"app\"]/div[4]/div/div/div[3]/button"));
@@ -53,12 +58,15 @@ public class ProfileTests extends BaseTest {
 
         driverWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div/div[2]/span/form")));
 
-        String editName = faker.name().firstName();
-        String editPhone = faker.phoneNumber().phoneNumber();
+
+        String editName = FakerClass.getFakeName();
+        String editPhone = FakerClass.getFakePhone();
         String editCity = "Chicago";
-        String editCountry = faker.address().country();
-        String editTwitter = "https://www.twitter.com/" + editName;
-        String editGithub = "https://www.github.com/" + editName;
+        String editCountry = FakerClass.getFakeCountry();
+        String editTwitter = "https://www.twitter.com/" + editName.toLowerCase();
+        String editGithub = "https://www.github.com/" + editName.toLowerCase();
+
+
 
         profilePage.editProfile(editName, editPhone, editCity, editCountry, editTwitter, editGithub);
 
@@ -70,15 +78,8 @@ public class ProfileTests extends BaseTest {
         Assert.assertEquals(profilePage.getPhone().getAttribute("value"), editPhone);
         Assert.assertEquals(profilePage.getCity().getAttribute("value"), editCity);
         Assert.assertEquals(profilePage.getCountry().getAttribute("value"), editCountry);
-        Assert.assertEquals(profilePage.getUrlTwitter().getAttribute("value"), editTwitter.toLowerCase());
-        Assert.assertEquals(profilePage.getUrlGithub().getAttribute("value"), editGithub.toLowerCase());
+        Assert.assertEquals(profilePage.getUrlTwitter().getAttribute("value"), editTwitter);
+        Assert.assertEquals(profilePage.getUrlGithub().getAttribute("value"), editGithub);
 
-    }
-
-
-    @AfterMethod
-    public void afterMethod() {
-        driverWait.until(ExpectedConditions.presenceOfElementLocated(By.className("btnLogout")));
-        landingPage.getLogoutBtn().sendKeys(Keys.ENTER);
     }
 }

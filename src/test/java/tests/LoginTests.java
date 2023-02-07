@@ -1,21 +1,17 @@
-package Tests;
+package tests;
 
-import Pages.HomePage;
-import Pages.LandingPage;
-import Pages.LoginPage;
-import com.github.javafaker.Faker;
+import pages.HomePage;
+import pages.LoginPage;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import utils.FakerClass;
 
 public class LoginTests extends BaseTest{
 
-    private Faker faker;
-    private LandingPage landingPage;
     private LoginPage loginPage;
     private HomePage homePage;
 
@@ -23,8 +19,6 @@ public class LoginTests extends BaseTest{
     @Override
     public void beforeClass() {
         super.beforeClass();
-        faker = new Faker();
-        landingPage = new LandingPage(driver, driverWait);
         loginPage = new LoginPage(driver, driverWait);
         homePage = new HomePage(driver, driverWait);
     }
@@ -56,12 +50,9 @@ public class LoginTests extends BaseTest{
     public void nonexistingUserTest() {
         driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("email")));
 
-        loginPage.login(faker.internet().emailAddress(), faker.internet().password());
+        loginPage.login(FakerClass.getFakeEmail(), FakerClass.getFakePassword());
 
-        WebElement error = driver.findElement(By.xpath("//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div/div[4]/div/div/div/div/div[1]/ul/li"));
-        String errorMsg = error.getText();
-
-        Assert.assertEquals(errorMsg, "User does not exists");
+        Assert.assertEquals(loginPage.getErrorMsg(),"User does not exists");
         Assert.assertTrue(driver.getCurrentUrl().endsWith("/login"));
     }
 
@@ -69,8 +60,7 @@ public class LoginTests extends BaseTest{
     public void inputWrongPasswordTest() {
         driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("email")));
 
-        String password = faker.internet().password();
-        loginPage.login(VALID_EMAIL, password);
+        loginPage.login(VALID_EMAIL, FakerClass.getFakePassword());
 
         driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div/div[4]/div/div/div/div/div[1]")));
 

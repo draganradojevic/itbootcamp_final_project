@@ -1,4 +1,4 @@
-package Pages;
+package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -18,6 +18,9 @@ public class LoginPage extends BasePage {
     @FindBy(xpath = "//*[@id=\"app\"]/div/main/div/div[2]/div/div/div[3]/span/form/div/div[3]/button")
     private WebElement loginButton;
 
+    @FindBy(xpath = "//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div/div[4]/div/div/div/div/div[1]/ul/li")
+    private WebElement errorMsg;
+
 //    @FindBy(xpath = "//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div/div[4]/div/div/div/div")
     @FindBy(xpath = "//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div/div[4]/div/div/div/div/div[1]")
     private WebElement message;
@@ -32,6 +35,10 @@ public class LoginPage extends BasePage {
 
     public WebElement getLoginPassword() {
         return loginPassword;
+    }
+
+    public String getErrorMsg() {
+        return errorMsg.getText();
     }
 
     public String getMessage() {
