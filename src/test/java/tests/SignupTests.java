@@ -44,7 +44,7 @@ public class SignupTests extends BaseTest{
         signupPage.waitForSignupNameField();
 
         String name = "Test Test";
-        String email = "admin@admin.com";
+        String email = VALID_EMAIL;
         String password = "123654";
         String confirmPassword = "123654";
 
@@ -67,10 +67,8 @@ public class SignupTests extends BaseTest{
         signupPage.signup(name, email, password, password);
 
         homePage.waitForURLToContainHome();
-
         homePage.waitForDialogMessage();
 
-        System.out.println(homePage.getDialogMessage() + " / IMPORTANT: Verify your account");
         Assert.assertTrue(homePage.getDialogMessage().contains("IMPORTANT: Verify your account"));
     }
 }

@@ -74,7 +74,7 @@ public class LoginTests extends BaseTest{
 
         loginPage.login(VALID_EMAIL, VALID_PASSWORD);
 
-        driverWait.until(ExpectedConditions.urlToBe("https://vue-demo.daniel-avellaneda.com/home"));
+        driverWait.until(ExpectedConditions.urlToBe(BASE_URL + "/home"));
         Assert.assertTrue(driver.getCurrentUrl().endsWith("/home"));
     }
 
@@ -90,7 +90,7 @@ public class LoginTests extends BaseTest{
 
         Assert.assertTrue(driver.getCurrentUrl().endsWith("/login"));
 
-        driver.get("https://vue-demo.daniel-avellaneda.com/home");
+        driver.get(BASE_URL + "/home");
 
         Assert.assertTrue(driver.getCurrentUrl().endsWith("/login"));
     }
